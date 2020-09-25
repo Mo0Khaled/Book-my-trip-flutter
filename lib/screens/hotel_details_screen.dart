@@ -1,4 +1,5 @@
 import 'package:bookmytrip/provider/hotel_provider.dart';
+import 'package:bookmytrip/widgets/drawer_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,10 +16,10 @@ class HotelDetailsScreen extends StatelessWidget {
     final hotelProvider =
         Provider.of<HotelProvider>(context, listen: false).findById(hotelId);
     return Scaffold(
-      drawer: Drawer(),
+      drawer: DrawerApp(),
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Hotel Details"),
+        title: Text("Hotel Details",style: TextStyle(color: Colors.white),),
         actions: [IconButton(icon: Icon(Icons.more_vert), onPressed: () {})],
       ),
       body: SingleChildScrollView(

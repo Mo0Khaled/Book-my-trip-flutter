@@ -1,4 +1,5 @@
 import 'package:bookmytrip/widgets/country_box_widget.dart';
+import 'package:bookmytrip/widgets/drawer_app.dart';
 import 'package:bookmytrip/widgets/hotel_container.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class HomePage extends StatelessWidget {
     final heightMedia = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: Drawer(),
+      drawer: DrawerApp(),
       appBar: AppBar(
         title: Text(
           "Dashboard",
@@ -78,7 +79,7 @@ class HomePage extends StatelessWidget {
               height: 30,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -26,6 +26,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           appBarTheme: AppBarTheme(
             color: Color(0xFFF57C00),
+            iconTheme: IconThemeData(color: Colors.white),
+            // textTheme: TextTheme(title:  ),
             centerTitle: true,
             elevation: 0,
           ),
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
           disabledColor: Colors.white,
           cursorColor: Colors.white,
           indicatorColor: Colors.white,
-          // primaryColor: Colors.white,
+          primaryColor: Color(0xFFF57C00),
           buttonColor: Colors.white,
 
           accentColor: Colors.white,
