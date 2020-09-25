@@ -1,4 +1,5 @@
 import 'package:bookmytrip/provider/hotel_provider.dart';
+import 'package:bookmytrip/screens/hotel_directions_screen.dart';
 import 'package:bookmytrip/widgets/drawer_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -149,7 +150,9 @@ class HotelDetailsScreen extends StatelessWidget {
               ),
               SizedBox(height: 35,),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed(HotelDirectionsScreen.routeId,arguments: hotelProvider.id);
+                },
                 child: Container(
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width* 1 - 20,
