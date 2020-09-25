@@ -94,7 +94,53 @@ class MakePaymentScreen extends StatelessWidget {
               SizedBox(height: 30,),
               Form(
                 child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(hintText: "Credit Card Number"),
+                      keyboardType: TextInputType.number,
+                    ),
+                    SizedBox(height: 30,),
+                    TextFormField(
+                      decoration: InputDecoration(hintText: "Credit Card Owner"),
+                      keyboardType: TextInputType.name,
+                    ),
+                    SizedBox(height: 30,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            decoration: InputDecoration(hintText: "Issue On"),
 
+                          ),
+                        ),
+                        SizedBox(width: 20,),
+                        Expanded(
+                          child: TextFormField(
+                            decoration: InputDecoration(hintText: "Expire On"),
+
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 50,),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width* 1 - 20,
+                        height:MediaQuery.of(context).size.height * 0.07,
+                        decoration: BoxDecoration(
+                            color: Color(0xFFF57C00),
+                            borderRadius: BorderRadius.circular(35)),
+                        child: Text(
+                          "Add New Card",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
