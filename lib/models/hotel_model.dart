@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class HotelModel {
   String id;
   String hotelName;
@@ -9,14 +11,14 @@ class HotelModel {
   int phoneNumber;
 
   HotelModel({
-    this.id,
-    this.hotelName,
-    this.baseImage,
-    this.images,
-    this.dayPrice,
-    this.description,
-    this.location,
-    this.phoneNumber,
+    @required this.id,
+    @required this.hotelName,
+    @required this.baseImage,
+    @required this.images,
+    @required this.dayPrice,
+    @required this.description,
+    @required this.location,
+    @required this.phoneNumber,
   });
 
   HotelModel fromJson(Map<String, dynamic> data) {
