@@ -3,6 +3,7 @@ import 'package:bookmytrip/screens/home_page.dart';
 import 'package:bookmytrip/screens/hotel_details_screen.dart';
 import 'package:bookmytrip/screens/hotel_directions_screen.dart';
 import 'package:bookmytrip/screens/make_payment_screen.dart';
+import 'package:bookmytrip/screens/profile_screen.dart';
 import 'package:bookmytrip/screens/sign_in_screen.dart';
 import 'package:bookmytrip/screens/sign_up_screen.dart';
 import 'package:bookmytrip/screens/welcome_screen.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
           HotelDetailsScreen.roueId:(context)=> HotelDetailsScreen(),
           HotelDirectionsScreen.routeId:(context)=> HotelDirectionsScreen(),
           MakePaymentScreen.routeId:(context)=> MakePaymentScreen(),
+          ProfileScreen.routeId:(context)=> ProfileScreen(),
         },
       ),
     );

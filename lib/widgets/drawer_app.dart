@@ -1,3 +1,4 @@
+import 'package:bookmytrip/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class DrawerApp extends StatelessWidget {
@@ -26,7 +27,9 @@ class DrawerApp extends StatelessWidget {
             ),
             // SizedBox(height: 30,),
             buildTitlePage(
-                title: "Account", icon: Icons.account_circle, onPressed: () {}),
+                title: "Account", icon: Icons.account_circle, onPressed: () {
+                  Navigator.of(context).pushNamed(ProfileScreen.routeId);
+            }),
             buildTitlePage(
                 title: "Bookings", icon: Icons.book, onPressed: () {}),
             buildTitlePage(
