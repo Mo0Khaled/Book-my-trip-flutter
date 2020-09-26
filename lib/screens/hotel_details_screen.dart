@@ -1,5 +1,6 @@
 import 'package:bookmytrip/provider/hotel_provider.dart';
 import 'package:bookmytrip/screens/hotel_directions_screen.dart';
+import 'package:bookmytrip/widgets/carsoul.dart';
 import 'package:bookmytrip/widgets/drawer_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,16 +32,8 @@ class HotelDetailsScreen extends StatelessWidget {
               Container(
                 width: double.infinity,
                 height: 300,
-                color: Colors.orange,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: hotelProvider.images.length,
-                  itemBuilder: (context,index){
-                    return Card(
-                      child: Image.network(hotelProvider.images[index]),
-                    );
-                  },
-                ),
+                // color: Colors.orange,
+                child: Carousel(hotelProvider.images),
               ),
               SizedBox(
                 height: 20,

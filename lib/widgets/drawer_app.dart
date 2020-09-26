@@ -1,3 +1,4 @@
+import 'package:bookmytrip/screens/hotel_admin_view.dart';
 import 'package:bookmytrip/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,9 @@ class DrawerApp extends StatelessWidget {
             buildTitlePage(
                 title: "Invite & Earn", icon: Icons.people, onPressed: () {}),
             buildTitlePage(
-                title: "Settings", icon: Icons.settings, onPressed: () {}),
+                title: "Settings", icon: Icons.settings, onPressed: () {
+              Navigator.of(context).pushNamed(HotelAdminView.routeId);
+            }),
           ],
         ),
       ),

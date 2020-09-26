@@ -5,51 +5,51 @@ import 'package:http/http.dart' as http;
 
 class HotelProvider with ChangeNotifier {
   final List<HotelModel> _hotels = [
-    HotelModel(
-      id: "1",
-      hotelName: "Hotel Galaxy",
-      baseImage: 'https://cf.bstatic.com/images/hotel/max1024x768/222/222713113.jpg',
-      images: [
-        'https://media-cdn.tripadvisor.com/media/photo-s/1b/ca/55/aa/steigenberger-hotel-el.jpg',
-        'https://cf.bstatic.com/images/hotel/max1024x768/222/222239457.jpg',
-        'https://cf.bstatic.com/images/hotel/max1024x768/231/231157566.jpg',
-      ],
-      dayPrice: 80,
-      description:
-          "Hotel galaxy is one of the finest hotel for any purpose.It has wifi, parking, luxury and semi luxury rooms. It has great dining area. Plus you can hold your business meetings comfortably.",
-      location: '145, Ground Floor, Ring Road Apt., New York City.',
-      phoneNumber: 10987654321,
-    ),
-    HotelModel(
-      id: "2",
-      hotelName: "Hotel Livingstone",
-      baseImage: 'https://cf.bstatic.com/images/hotel/max1024x768/231/231157566.jpg',
-      images: [
-        'https://media-cdn.tripadvisor.com/media/photo-s/1b/ca/55/aa/steigenberger-hotel-el.jpg',
-        'https://cf.bstatic.com/images/hotel/max1024x768/222/222239457.jpg',
-        'https://cf.bstatic.com/images/hotel/max1024x768/231/231157566.jpg',
-      ],
-      dayPrice: 50,
-      description:
-      "Hotel galaxy is one of the finest hotel for any purpose.It has wifi, parking, luxury and semi luxury rooms. It has great dining area. Plus you can hold your business meetings comfortably.",
-      location: '145, Ground Floor, Ring Road Apt., New York City.',
-      phoneNumber: 10987654321,
-    ),
-    HotelModel(
-      id: "3",
-      hotelName: "Hotel Star",
-      baseImage: 'https://media-cdn.tripadvisor.com/media/photo-s/1b/ca/55/aa/steigenberger-hotel-el.jpg',
-      images: [
-        'https://media-cdn.tripadvisor.com/media/photo-s/1b/ca/55/aa/steigenberger-hotel-el.jpg',
-        'https://cf.bstatic.com/images/hotel/max1024x768/222/222239457.jpg',
-        'https://cf.bstatic.com/images/hotel/max1024x768/231/231157566.jpg',
-      ],
-      dayPrice: 80,
-      description:
-      "Hotel galaxy is one of the finest hotel for any purpose.It has wifi, parking, luxury and semi luxury rooms. It has great dining area. Plus you can hold your business meetings comfortably.",
-      location: '145, Ground Floor, Ring Road Apt., New York City.',
-      phoneNumber: 10987654321,
-    ),
+    // HotelModel(
+    //   id: "1",
+    //   hotelName: "Hotel Galaxy",
+    //   baseImage: 'https://cf.bstatic.com/images/hotel/max1024x768/222/222713113.jpg',
+    //   images: [
+    //     'https://media-cdn.tripadvisor.com/media/photo-s/1b/ca/55/aa/steigenberger-hotel-el.jpg',
+    //     'https://cf.bstatic.com/images/hotel/max1024x768/222/222239457.jpg',
+    //     'https://cf.bstatic.com/images/hotel/max1024x768/231/231157566.jpg',
+    //   ],
+    //   dayPrice: 80,
+    //   description:
+    //       "Hotel galaxy is one of the finest hotel for any purpose.It has wifi, parking, luxury and semi luxury rooms. It has great dining area. Plus you can hold your business meetings comfortably.",
+    //   location: '145, Ground Floor, Ring Road Apt., New York City.',
+    //   phoneNumber: 10987654321,
+    // ),
+    // HotelModel(
+    //   id: "2",
+    //   hotelName: "Hotel Livingstone",
+    //   baseImage: 'https://cf.bstatic.com/images/hotel/max1024x768/231/231157566.jpg',
+    //   images: [
+    //     'https://media-cdn.tripadvisor.com/media/photo-s/1b/ca/55/aa/steigenberger-hotel-el.jpg',
+    //     'https://cf.bstatic.com/images/hotel/max1024x768/222/222239457.jpg',
+    //     'https://cf.bstatic.com/images/hotel/max1024x768/231/231157566.jpg',
+    //   ],
+    //   dayPrice: 50,
+    //   description:
+    //   "Hotel galaxy is one of the finest hotel for any purpose.It has wifi, parking, luxury and semi luxury rooms. It has great dining area. Plus you can hold your business meetings comfortably.",
+    //   location: '145, Ground Floor, Ring Road Apt., New York City.',
+    //   phoneNumber: 10987654321,
+    // ),
+    // HotelModel(
+    //   id: "3",
+    //   hotelName: "Hotel Star",
+    //   baseImage: 'https://media-cdn.tripadvisor.com/media/photo-s/1b/ca/55/aa/steigenberger-hotel-el.jpg',
+    //   images: [
+    //     'https://media-cdn.tripadvisor.com/media/photo-s/1b/ca/55/aa/steigenberger-hotel-el.jpg',
+    //     'https://cf.bstatic.com/images/hotel/max1024x768/222/222239457.jpg',
+    //     'https://cf.bstatic.com/images/hotel/max1024x768/231/231157566.jpg',
+    //   ],
+    //   dayPrice: 80,
+    //   description:
+    //   "Hotel galaxy is one of the finest hotel for any purpose.It has wifi, parking, luxury and semi luxury rooms. It has great dining area. Plus you can hold your business meetings comfortably.",
+    //   location: '145, Ground Floor, Ring Road Apt., New York City.',
+    //   phoneNumber: 10987654321,
+    // ),
   ];
 
   List<HotelModel> get hotels => _hotels;
@@ -63,7 +63,13 @@ class HotelProvider with ChangeNotifier {
         url,
         body: json.encode(
           {
-            hotelModel.toJson(),
+            'hotelName': hotelModel.hotelName,
+            'baseImage': hotelModel.baseImage,
+            'images': hotelModel.images.toList(),
+            'dayPrice': hotelModel.dayPrice,
+            'description': hotelModel.description,
+            'location': hotelModel.location,
+            'phoneNumber': hotelModel.phoneNumber,
           },
         ),
       );
