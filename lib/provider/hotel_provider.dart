@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class HotelProvider with ChangeNotifier {
-  final List<HotelModel> _hotels = [
+   List<HotelModel> _hotels = [
     // HotelModel(
     //   id: "1",
     //   hotelName: "Hotel Galaxy",
@@ -53,8 +53,43 @@ class HotelProvider with ChangeNotifier {
   ];
 
   List<HotelModel> get hotels => _hotels;
-  HotelModel findById(String id) => _hotels.firstWhere((element) => element.id == id);
-  Future<void> fetchHotels() async {}
+
+  HotelModel findById(String id) =>
+      _hotels.firstWhere((element) => element.id == id);
+
+  Future<void> fetchHotels() async {
+    final url = 'https://book-my-trip-8b2f5.firebaseio.com/hotels.json';
+    try {
+      final response = await http.get(url);
+      final data = json.decode(response.body) as Map<String, dynamic>;
+      if (data == null) {
+        return;
+      }
+      final List<HotelModel> loadedHotels = [];
+      data.forEach((hotelId, hotelData) {
+        List<String> img = [];
+        for(var i in hotelData['images']){
+          img.add(i);
+        }
+        loadedHotels.add(
+          HotelModel(
+            id: hotelId,
+            hotelName: hotelData['hotelName'],
+            baseImage: hotelData['baseImage'],
+            images: img,
+            dayPrice: hotelData['dayPrice'],
+            description: hotelData['description'],
+            location: hotelData['location'],
+            phoneNumber: hotelData['phoneNumber'],
+          ),
+        );
+      });
+      _hotels = loadedHotels.reversed.toList();
+      notifyListeners();
+    } catch (error) {
+      print(error.toString());
+    }
+  }
 
   Future<void> addHotel(HotelModel hotelModel) async {
     final url = 'https://book-my-trip-8b2f5.firebaseio.com/hotels.json';
@@ -98,7 +133,13 @@ class HotelProvider with ChangeNotifier {
         url,
         body: json.encode(
           {
-            updatedHotel.toJson(),
+            'hotelName': updatedHotel.hotelName,
+            'baseImage': updatedHotel.baseImage,
+            'images': updatedHotel.images.toList(),
+            'dayPrice': updatedHotel.dayPrice,
+            'description': updatedHotel.description,
+            'location': updatedHotel.location,
+            'phoneNumber': updatedHotel.phoneNumber,
           },
         ),
       );

@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 
 class HotelModel {
   String id;
   String hotelName;
   String baseImage;
-  List<Asset> images;
+  List<String> images;
   double dayPrice;
   String description;
   String location;

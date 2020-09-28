@@ -6,11 +6,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HotelDetailsScreen extends StatelessWidget {
+class HotelDetailsScreen extends StatefulWidget {
   static const roueId = '/hotel-details';
-  final int _nights = 1;
-  final int _days = 1;
-  final int _rooms = 1;
+
+  @override
+  _HotelDetailsScreenState createState() => _HotelDetailsScreenState();
+}
+
+class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
+  int _nights = 1;
+
+   int _days = 1;
+
+   int _rooms = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -126,19 +134,41 @@ class HotelDetailsScreen extends StatelessWidget {
                       title: "Nights",
                       filed: _nights,
                       add: () {
-
+                          setState(() {
+                            _nights++;
+                          });
                       },
-                      remove: () {}),
+                      remove: () {
+                        setState(() {
+                          _nights >1 ? _nights-- : _nights = 1;
+                        });
+                      }),
                   buildSmallCard(
                       title: "Days",
                       filed: _days,
-                      add: () {},
-                      remove: () {}),
+                      add: () {
+                        setState(() {
+                          _days++;
+                        });
+                      },
+                      remove: () {
+                        setState(() {
+                          _days > 1 ? _days-- : _days = 1;
+                        });
+                      }),
                   buildSmallCard(
                       title: "Rooms",
                       filed: _rooms,
-                      add: () {},
-                      remove: () {}),
+                      add: () {
+                        setState(() {
+                          _rooms++;
+                        });
+                      },
+                      remove: () {
+                        setState(() {
+                          _rooms > 1 ? _rooms-- : _rooms = 1;
+                        });
+                      }),
                 ],
               ),
               SizedBox(height: 35,),

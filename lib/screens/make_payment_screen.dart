@@ -1,5 +1,8 @@
+import 'package:bookmytrip/models/cart_item.dart';
+import 'package:bookmytrip/provider/order_provider.dart';
 import 'package:bookmytrip/widgets/drawer_app.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MakePaymentScreen extends StatelessWidget {
   static const routeId = '/make-payment';
@@ -11,8 +14,10 @@ class MakePaymentScreen extends StatelessWidget {
     color: Colors.white,
     fontSize: 16,
   );
+
   @override
   Widget build(BuildContext context) {
+    final orderProvider = Provider.of<OrderProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: DrawerApp(),
@@ -67,69 +72,111 @@ class MakePaymentScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Card Owner",style: _textStyleSmall,),
+                          Text(
+                            "Card Owner",
+                            style: _textStyleSmall,
+                          ),
                           Spacer(),
-                          Text("Issued",style: _textStyleSmall,),
-                          SizedBox(width: 15,),
-                          Text("Expire",style: _textStyleSmall),
+                          Text(
+                            "Issued",
+                            style: _textStyleSmall,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text("Expire", style: _textStyleSmall),
                         ],
                       ),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Ronnie Hill",style: _textStyleSmall),
+                          Text("Ronnie Hill", style: _textStyleSmall),
                           Spacer(),
-                          Text("06/19",style: _textStyleSmall),
-                          SizedBox(width: 15,),
-                          Text("06/22",style: _textStyleSmall),
+                          Text("06/19", style: _textStyleSmall),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text("06/22", style: _textStyleSmall),
                         ],
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 30,),
-              Text("Add New Card",style: TextStyle(color: Color(0xFF757575),fontSize: 22,fontWeight: FontWeight.w500),),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                "Add New Card",
+                style: TextStyle(
+                    color: Color(0xFF757575),
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                height: 30,
+              ),
               Form(
                 child: Column(
                   children: [
                     TextFormField(
-                      decoration: InputDecoration(hintText: "Credit Card Number"),
+                      decoration:
+                          InputDecoration(hintText: "Credit Card Number"),
                       keyboardType: TextInputType.number,
                     ),
-                    SizedBox(height: 30,),
+                    SizedBox(
+                      height: 30,
+                    ),
                     TextFormField(
-                      decoration: InputDecoration(hintText: "Credit Card Owner"),
+                      decoration:
+                          InputDecoration(hintText: "Credit Card Owner"),
                       keyboardType: TextInputType.name,
                     ),
-                    SizedBox(height: 30,),
+                    SizedBox(
+                      height: 30,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
                           child: TextFormField(
                             decoration: InputDecoration(hintText: "Issue On"),
-
                           ),
                         ),
-                        SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         Expanded(
                           child: TextFormField(
                             decoration: InputDecoration(hintText: "Expire On"),
-
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 50,),
+                    SizedBox(
+                      height: 50,
+                    ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        orderProvider.bookNow(
+
+                            CartItemModel(
+                                hotelName: "mo",
+                                id: "s",
+                                price: 552,
+                                days: 4,
+                                nights: 5,
+                                rooms: 8),
+
+                        );
+                      },
                       child: Container(
                         alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width* 1 - 20,
-                        height:MediaQuery.of(context).size.height * 0.07,
+                        width: MediaQuery.of(context).size.width * 1 - 20,
+                        height: MediaQuery.of(context).size.height * 0.07,
                         decoration: BoxDecoration(
                             color: Color(0xFFF57C00),
                             borderRadius: BorderRadius.circular(35)),
