@@ -1,5 +1,5 @@
-import 'package:bookmytrip/models/cart_item.dart';
 import 'package:bookmytrip/provider/order_provider.dart';
+import 'package:bookmytrip/screens/successful_page.dart';
 import 'package:bookmytrip/widgets/drawer_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -160,18 +160,14 @@ class MakePaymentScreen extends StatelessWidget {
                       height: 50,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        orderProvider.bookNow(
-
-                            CartItemModel(
-                                hotelName: "mo",
-                                id: "s",
-                                price: 552,
-                                days: 4,
-                                nights: 5,
-                                rooms: 8),
-
-                        );
+                      onTap: () async {
+                        await orderProvider
+                            .bookNow(orderProvider.orders.first)
+                            .then((_) => orderProvider.clear())
+                            .then(
+                              (_) => Navigator.of(context)
+                                  .pushReplacementNamed(SuccessfulPage.routeId),
+                            );
                       },
                       child: Container(
                         alignment: Alignment.center,

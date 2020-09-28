@@ -1,4 +1,3 @@
-import 'package:bookmytrip/provider/cart_provider.dart';
 import 'package:bookmytrip/provider/hotel_provider.dart';
 import 'package:bookmytrip/provider/order_provider.dart';
 import 'package:bookmytrip/screens/home_page.dart';
@@ -10,6 +9,7 @@ import 'package:bookmytrip/screens/make_payment_screen.dart';
 import 'package:bookmytrip/screens/profile_screen.dart';
 import 'package:bookmytrip/screens/sign_in_screen.dart';
 import 'package:bookmytrip/screens/sign_up_screen.dart';
+import 'package:bookmytrip/screens/successful_page.dart';
 import 'package:bookmytrip/screens/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +33,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => OrderProvider(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => CartProvider(),
-        ),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -71,6 +69,7 @@ class MyApp extends StatelessWidget {
           ProfileScreen.routeId: (context) => ProfileScreen(),
           HotelAdminView.routeId: (context) => HotelAdminView(),
           HotelAdminPanel.routeId: (context) => HotelAdminPanel(),
+          SuccessfulPage.routeId:(context)=> SuccessfulPage(),
         },
       ),
     );

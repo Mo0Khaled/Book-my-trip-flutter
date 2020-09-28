@@ -1,4 +1,6 @@
+import 'package:bookmytrip/models/order_model.dart';
 import 'package:bookmytrip/provider/hotel_provider.dart';
+import 'package:bookmytrip/provider/order_provider.dart';
 import 'package:bookmytrip/screens/hotel_directions_screen.dart';
 import 'package:bookmytrip/widgets/carsoul.dart';
 import 'package:bookmytrip/widgets/drawer_app.dart';
@@ -16,20 +18,24 @@ class HotelDetailsScreen extends StatefulWidget {
 class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
   int _nights = 1;
 
-   int _days = 1;
+  int _days = 1;
 
-   int _rooms = 1;
+  int _rooms = 1;
 
   @override
   Widget build(BuildContext context) {
     final hotelId = ModalRoute.of(context).settings.arguments as String;
     final hotelProvider =
         Provider.of<HotelProvider>(context, listen: false).findById(hotelId);
+    final orderProvider = Provider.of<OrderProvider>(context, listen: false);
     return Scaffold(
       drawer: DrawerApp(),
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Hotel Details",style: TextStyle(color: Colors.white),),
+        title: Text(
+          "Hotel Details",
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [IconButton(icon: Icon(Icons.more_vert), onPressed: () {})],
       ),
       body: SingleChildScrollView(
@@ -134,13 +140,13 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                       title: "Nights",
                       filed: _nights,
                       add: () {
-                          setState(() {
-                            _nights++;
-                          });
+                        setState(() {
+                          _nights++;
+                        });
                       },
                       remove: () {
                         setState(() {
-                          _nights >1 ? _nights-- : _nights = 1;
+                          _nights > 1 ? _nights-- : _nights = 1;
                         });
                       }),
                   buildSmallCard(
@@ -171,15 +177,27 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
                       }),
                 ],
               ),
-              SizedBox(height: 35,),
+              SizedBox(
+                height: 35,
+              ),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(HotelDirectionsScreen.routeId,arguments: hotelProvider.id);
+                  orderProvider.orders.add(
+                    OrderModel(
+                      hotelName: hotelProvider.hotelName,
+                      price: hotelProvider.dayPrice,
+                      nights: _nights,
+                      days: _days,
+                      rooms: _rooms,
+                    ),
+                  );
+                  Navigator.of(context).pushNamed(HotelDirectionsScreen.routeId,
+                      arguments: hotelProvider.id);
                 },
                 child: Container(
                   alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width* 1 - 20,
-                  height:MediaQuery.of(context).size.height * 0.07,
+                  width: MediaQuery.of(context).size.width * 1 - 20,
+                  height: MediaQuery.of(context).size.height * 0.07,
                   decoration: BoxDecoration(
                       color: Color(0xFFF57C00),
                       borderRadius: BorderRadius.circular(35)),

@@ -1,16 +1,21 @@
-import 'package:bookmytrip/models/cart_item.dart';
 import 'package:flutter/foundation.dart';
 
 class OrderModel {
   final String id;
-  final double totalAmount;
-  final CartItemModel cartItemModel;
+  final String hotelName;
+  final double price;
+  final int nights;
+  final int days;
+  final int rooms;
   final DateTime dataTime;
 
   OrderModel({
-    @required this.id,
-    @required this.totalAmount,
-    @required this.cartItemModel,
-    @required this.dataTime,
+     this.id,
+    @required this.hotelName,
+    @required this.price,
+    @required this.nights,
+    @required this.days,
+    @required this.rooms,
+     this.dataTime,
   });
 }
