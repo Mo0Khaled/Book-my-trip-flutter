@@ -182,14 +182,13 @@ class _HotelDetailsScreenState extends State<HotelDetailsScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  orderProvider.orders.add(
-                    OrderModel(
-                      hotelName: hotelProvider.hotelName,
-                      price: hotelProvider.dayPrice,
-                      nights: _nights,
-                      days: _days,
-                      rooms: _rooms,
-                    ),
+                  orderProvider.order =  OrderModel(
+                    hotelName: hotelProvider.hotelName,
+                    price: hotelProvider.dayPrice,
+                    nights: _nights,
+                    days: _days,
+                    rooms: _rooms,
+                    image: hotelProvider.baseImage,
                   );
                   Navigator.of(context).pushNamed(HotelDirectionsScreen.routeId,
                       arguments: hotelProvider.id);

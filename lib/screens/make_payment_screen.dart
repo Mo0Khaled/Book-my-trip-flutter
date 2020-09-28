@@ -161,10 +161,7 @@ class MakePaymentScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        await orderProvider
-                            .bookNow(orderProvider.orders.first)
-                            .then((_) => orderProvider.clear())
-                            .then(
+                        await orderProvider.bookNow(orderProvider.order).then(
                               (_) => Navigator.of(context)
                                   .pushReplacementNamed(SuccessfulPage.routeId),
                             );

@@ -1,3 +1,4 @@
+import 'package:bookmytrip/screens/booking_history.dart';
 import 'package:bookmytrip/screens/hotel_admin_view.dart';
 import 'package:bookmytrip/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,9 @@ class DrawerApp extends StatelessWidget {
                   Navigator.of(context).pushNamed(ProfileScreen.routeId);
             }),
             buildTitlePage(
-                title: "Bookings", icon: Icons.book, onPressed: () {}),
+                title: "Bookings", icon: Icons.book, onPressed: () {
+              Navigator.of(context).pushNamed(BookingHistory.routeId);
+            }),
             buildTitlePage(
                 title: "Transactions", icon: Icons.attach_money, onPressed: () {}),
             buildTitlePage(

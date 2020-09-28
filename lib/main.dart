@@ -1,5 +1,6 @@
 import 'package:bookmytrip/provider/hotel_provider.dart';
 import 'package:bookmytrip/provider/order_provider.dart';
+import 'package:bookmytrip/screens/booking_history.dart';
 import 'package:bookmytrip/screens/home_page.dart';
 import 'package:bookmytrip/screens/hotel_admin_panel.dart';
 import 'package:bookmytrip/screens/hotel_admin_view.dart';
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
           HotelAdminView.routeId: (context) => HotelAdminView(),
           HotelAdminPanel.routeId: (context) => HotelAdminPanel(),
           SuccessfulPage.routeId:(context)=> SuccessfulPage(),
+          BookingHistory.routeId:(context)=> BookingHistory(),
         },
       ),
     );

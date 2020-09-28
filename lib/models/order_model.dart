@@ -8,6 +8,7 @@ class OrderModel {
   final int days;
   final int rooms;
   final DateTime dataTime;
+  final String image;
 
   OrderModel({
      this.id,
@@ -17,5 +18,6 @@ class OrderModel {
     @required this.days,
     @required this.rooms,
      this.dataTime,
+    @required this.image,
   });
 }
