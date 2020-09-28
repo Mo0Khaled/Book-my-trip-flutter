@@ -1,11 +1,25 @@
 import 'package:bookmytrip/widgets/country_box_widget.dart';
 import 'package:bookmytrip/widgets/drawer_app.dart';
 import 'package:bookmytrip/widgets/hotel_container.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const routeId = '/home-page';
 
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _visible = false;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 200),(){setState(() {
+      _visible = true;
+    });});
+  }
   @override
   Widget build(BuildContext context) {
     // final widthMedia = MediaQuery.of(context).size.width;
@@ -28,8 +42,10 @@ class HomePage extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {},
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
+              child: AnimatedPadding(
+                duration: Duration(milliseconds: 600),
+                curve: Curves.ease,
+                padding: _visible ? EdgeInsets.all(15.0) : EdgeInsets.all(0.0),
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   alignment: Alignment.centerLeft,
@@ -60,19 +76,23 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              width: double.infinity,
-              height: 100,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  CountryBoxWidget(),
-                  CountryBoxWidget(),
-                  CountryBoxWidget(),
-                  CountryBoxWidget(),
-                  CountryBoxWidget(),
-                  CountryBoxWidget(),
-                ],
+            AnimatedOpacity(
+              opacity: _visible ? 1:0,
+              duration: Duration(milliseconds: 800),
+              child: Container(
+                width: double.infinity,
+                height: 100,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    CountryBoxWidget(),
+                    CountryBoxWidget(),
+                    CountryBoxWidget(),
+                    CountryBoxWidget(),
+                    CountryBoxWidget(),
+                    CountryBoxWidget(),
+                  ],
+                ),
               ),
             ),
             SizedBox(
@@ -100,10 +120,14 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              width: double.infinity,
-              height: heightMedia * 1,
-              child: HotelContainer(),
+            AnimatedOpacity(
+              opacity: _visible ? 1:0,
+              duration: Duration(seconds: 4),
+              child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 1,
+                child: HotelContainer(),
+              ),
             ),
           ],
         ),

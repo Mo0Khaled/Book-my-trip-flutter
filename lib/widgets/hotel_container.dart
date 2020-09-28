@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HotelContainer extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     final hotelProvider = Provider.of<HotelProvider>(context, listen: false);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 20),
       child: FutureBuilder(
         future: hotelProvider.fetchHotels(),
         builder:(context,snapshot)=> snapshot.connectionState == ConnectionState.waiting ? Center(child: CircularProgressIndicator(),): ListView.builder(
