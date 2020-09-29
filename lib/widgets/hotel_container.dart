@@ -12,7 +12,7 @@ class HotelContainer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 20),
       child: FutureBuilder(
         future: hotelProvider.fetchHotels(),
-        builder:(context,snapshot)=> snapshot.connectionState == ConnectionState.waiting ? Center(child: CircularProgressIndicator(),): ListView.builder(
+        builder:(context,snapshot)=> snapshot.connectionState == ConnectionState.waiting ? Center(child: CircularProgressIndicator(),) : ListView.builder(
           itemCount: hotelProvider.hotels.length,
           itemBuilder: (context, index) {
             return Column(

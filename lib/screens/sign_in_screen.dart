@@ -1,6 +1,9 @@
+import 'package:bookmytrip/provider/authentication.dart';
+import 'package:bookmytrip/screens/home_page.dart';
 import 'package:bookmytrip/screens/sign_up_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
   static const routeId = '/sign-in-screen';
@@ -11,11 +14,40 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
+  Map<String,String> _authData = {
+    'email':"",
+    "password":"",
+  };
+  var _isLoading = false;
+
+  Future<void> _submit() async {
+
+    if(!_formKey.currentState.validate()){
+      return ;
+    }
+    _formKey.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
+
+    try{
+      await Provider.of<Authentication>(context,listen: false).login(_authData['email'], _authData['password'],context);
+
+    }catch(error){
+      print(error.toString());
+    }
+    // Navigator.of(context).pushNamed(HomePage.routeId);
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     final widthMedia = MediaQuery.of(context).size.width;
     final heightMedia = MediaQuery.of(context).size.height;
+
     return Stack(
       children: [
         Image.asset(
@@ -64,6 +96,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         cursorColor: Colors.white,
                         keyboardType: TextInputType.emailAddress,
+                        onSaved: (value){
+                          _authData['email'] = value;
+                        },
                       ),
                       SizedBox(
                         height: 20,
@@ -80,18 +115,24 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                         keyboardType: TextInputType.name,
+                        onSaved: (value){
+                          _authData['password'] = value;
+                        },
                       ),
                     ],
                   ),
                 ),
               ),
+              if(_isLoading)
+                Center(child: CircularProgressIndicator())
+              else
               Positioned(
                 top: heightMedia - 200,
                 left: widthMedia * 0.03,
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: _submit,
                       child: Container(
                         alignment: Alignment.center,
                         width: widthMedia * 1 - 20,

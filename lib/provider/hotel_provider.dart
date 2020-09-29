@@ -5,14 +5,21 @@ import 'package:http/http.dart' as http;
 
 class HotelProvider with ChangeNotifier {
   List<HotelModel> _hotels = [];
+  final String token;
+
+
 
   List<HotelModel> get hotels => _hotels;
-
+  HotelProvider(
+      this.token,
+      this._hotels,
+      );
   HotelModel findById(String id) =>
       _hotels.firstWhere((element) => element.id == id);
 
   Future<void> fetchHotels() async {
-    final url = 'https://book-my-trip-8b2f5.firebaseio.com/hotels.json';
+    final url =
+        'https://book-my-trip-8b2f5.firebaseio.com/hotels.json?auth=$token';
     try {
       final response = await http.get(url);
       final data = json.decode(response.body) as Map<String, dynamic>;
@@ -46,7 +53,7 @@ class HotelProvider with ChangeNotifier {
   }
 
   Future<void> addHotel(HotelModel hotelModel) async {
-    final url = 'https://book-my-trip-8b2f5.firebaseio.com/hotels.json';
+    final url = 'https://book-my-trip-8b2f5.firebaseio.com/hotels.json?auth=$token';
     try {
       final response = await http.post(
         url,
@@ -80,7 +87,7 @@ class HotelProvider with ChangeNotifier {
   }
 
   Future<void> updateHotel(String id, HotelModel updatedHotel) async {
-    final url = 'https://book-my-trip-8b2f5.firebaseio.com/hotels/$id.json';
+    final url = 'https://book-my-trip-8b2f5.firebaseio.com/hotels/$id.json?auth=$token';
     final hotelIndex = _hotels.indexWhere((newHotel) => newHotel.id == id);
     if (hotelIndex >= 0) {
       await http.patch(
@@ -105,7 +112,7 @@ class HotelProvider with ChangeNotifier {
   }
 
   Future<void> deleteHotel(String id) async {
-    final url = 'https://book-my-trip-8b2f5.firebaseio.com/hotels/$id.json';
+    final url = 'https://book-my-trip-8b2f5.firebaseio.com/hotels/$id.json?auth=$token';
 
     final existingHotelIndex =
         _hotels.indexWhere((productIndex) => productIndex.id == id);

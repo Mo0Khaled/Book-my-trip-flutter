@@ -1,5 +1,7 @@
+import 'package:bookmytrip/provider/authentication.dart';
 import 'package:bookmytrip/screens/sign_in_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const routeId = '/sign-up-screen';
@@ -10,6 +12,34 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  Map<String,String> _authData = {
+    'email':"",
+    "password":"",
+  };
+  var _isLoading = false;
+
+  Future<void> _submit() async {
+
+    if(!_formKey.currentState.validate()){
+      return ;
+    }
+    _formKey.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
+
+    try{
+      await Provider.of<Authentication>(context,listen: false).signUp(_authData['email'], _authData['password']);
+
+    }catch(error){
+      print(error.toString());
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +108,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         keyboardType: TextInputType.name,
+                        onSaved: (value){
+                          _authData['email'] = value;
+
+                        },
                       ),
                       SizedBox(
                         height: 30,
@@ -109,18 +143,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         keyboardType: TextInputType.name,
+                          onSaved: (value){
+                            _authData['password'] = value;
+
+                          }
                       ),
                     ],
                   ),
                 ),
               ),
+              if(_isLoading)
+                Center(child: CircularProgressIndicator(),)
+              else
               Positioned(
                 top: heightMedia - 200,
                 left: widthMedia * 0.03,
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: _submit,
                       child: Container(
                         alignment: Alignment.center,
                         width: widthMedia * 1 - 20,

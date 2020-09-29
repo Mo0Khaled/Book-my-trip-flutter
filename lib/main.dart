@@ -1,3 +1,4 @@
+import 'package:bookmytrip/provider/authentication.dart';
 import 'package:bookmytrip/provider/hotel_provider.dart';
 import 'package:bookmytrip/provider/order_provider.dart';
 import 'package:bookmytrip/screens/booking_history.dart';
@@ -28,51 +29,60 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => HotelProvider(),
+        ChangeNotifierProvider.value(
+          value: Authentication(),
+        ),
+
+        ChangeNotifierProxyProvider<Authentication,HotelProvider>(
+          update: (ctx,auth,hotels) => HotelProvider(auth.token,hotels.hotels == null ? [] : hotels.hotels),
+          create: (context) => HotelProvider('', []),
+
         ),
         ChangeNotifierProvider(
           create: (context) => OrderProvider(),
         ),
 
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Book My Trip App',
-        theme: ThemeData(
-          appBarTheme: AppBarTheme(
-            color: Color(0xFFF57C00),
-            iconTheme: IconThemeData(color: Colors.white),
-            // textTheme: TextTheme(title:  ),
-            centerTitle: true,
-            elevation: 0,
-          ),
-          scaffoldBackgroundColor: Colors.transparent,
-          disabledColor: Colors.white,
-          cursorColor: Colors.white,
-          indicatorColor: Colors.white,
-          primaryColor: Color(0xFFF57C00),
-          buttonColor: Colors.white,
+      child: Consumer<Authentication>(
+        builder: (context, auth, _) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Book My Trip App',
+          theme: ThemeData(
+            appBarTheme: AppBarTheme(
+              color: Color(0xFFF57C00),
+              iconTheme: IconThemeData(color: Colors.white),
+              // textTheme: TextTheme(title:  ),
+              centerTitle: true,
+              elevation: 0,
+            ),
+            scaffoldBackgroundColor: Colors.transparent,
+            disabledColor: Colors.white,
+            // ignore: deprecated_member_use
+            cursorColor: Colors.white,
+            indicatorColor: Colors.white,
+            primaryColor: Color(0xFFF57C00),
+            buttonColor: Colors.white,
 
-          accentColor: Colors.white,
-          // buttonColor: Colors.white,
+            accentColor: Colors.white,
+            // buttonColor: Colors.white,
+          ),
+          home: auth.isAuth ? HomePage() : WelcomeScreen(),
+          // initialRoute: HomePage.routeId,
+          routes: {
+            HomePage.routeId: (context) => HomePage(),
+            WelcomeScreen.routeId: (context) => WelcomeScreen(),
+            SignInScreen.routeId: (context) => SignInScreen(),
+            SignUpScreen.routeId: (context) => SignUpScreen(),
+            HotelDetailsScreen.roueId: (context) => HotelDetailsScreen(),
+            HotelDirectionsScreen.routeId: (context) => HotelDirectionsScreen(),
+            MakePaymentScreen.routeId: (context) => MakePaymentScreen(),
+            ProfileScreen.routeId: (context) => ProfileScreen(),
+            HotelAdminView.routeId: (context) => HotelAdminView(),
+            HotelAdminPanel.routeId: (context) => HotelAdminPanel(),
+            SuccessfulPage.routeId: (context) => SuccessfulPage(),
+            BookingHistory.routeId: (context) => BookingHistory(),
+          },
         ),
-        // home: WelcomeScreen(),
-        initialRoute: HomePage.routeId,
-        routes: {
-          HomePage.routeId: (context) => HomePage(),
-          WelcomeScreen.routeId: (context) => WelcomeScreen(),
-          SignInScreen.routeId: (context) => SignInScreen(),
-          SignUpScreen.routeId: (context) => SignUpScreen(),
-          HotelDetailsScreen.roueId: (context) => HotelDetailsScreen(),
-          HotelDirectionsScreen.routeId: (context) => HotelDirectionsScreen(),
-          MakePaymentScreen.routeId: (context) => MakePaymentScreen(),
-          ProfileScreen.routeId: (context) => ProfileScreen(),
-          HotelAdminView.routeId: (context) => HotelAdminView(),
-          HotelAdminPanel.routeId: (context) => HotelAdminPanel(),
-          SuccessfulPage.routeId:(context)=> SuccessfulPage(),
-          BookingHistory.routeId:(context)=> BookingHistory(),
-        },
       ),
     );
   }
