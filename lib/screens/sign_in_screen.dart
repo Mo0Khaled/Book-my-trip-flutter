@@ -14,26 +14,25 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
-  Map<String,String> _authData = {
-    'email':"",
-    "password":"",
+  Map<String, String> _authData = {
+    'email': "",
+    "password": "",
   };
   var _isLoading = false;
 
   Future<void> _submit() async {
-
-    if(!_formKey.currentState.validate()){
-      return ;
+    if (!_formKey.currentState.validate()) {
+      return;
     }
     _formKey.currentState.save();
     setState(() {
       _isLoading = true;
     });
 
-    try{
-      await Provider.of<Authentication>(context,listen: false).login(_authData['email'], _authData['password'],context);
-
-    }catch(error){
+    try {
+      await Provider.of<Authentication>(context, listen: false)
+          .login(_authData['email'], _authData['password'], context);
+    } catch (error) {
       print(error.toString());
     }
     // Navigator.of(context).pushNamed(HomePage.routeId);
@@ -41,7 +40,6 @@ class _SignInScreenState extends State<SignInScreen> {
       _isLoading = false;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +94,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         cursorColor: Colors.white,
                         keyboardType: TextInputType.emailAddress,
-                        onSaved: (value){
+                        onSaved: (value) {
                           _authData['email'] = value;
                         },
                       ),
@@ -115,7 +113,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                         keyboardType: TextInputType.name,
-                        onSaved: (value){
+                        onSaved: (value) {
                           _authData['password'] = value;
                         },
                       ),
@@ -123,53 +121,65 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                 ),
               ),
-              if(_isLoading)
+              if (_isLoading)
                 Center(child: CircularProgressIndicator())
               else
-              Positioned(
-                top: heightMedia - 200,
-                left: widthMedia * 0.03,
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: _submit,
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: widthMedia * 1 - 20,
-                        height: heightMedia * 0.07,
-                        decoration: BoxDecoration(
-                            color: Color(0xFFF57C00),
-                            borderRadius: BorderRadius.circular(35)),
-                        child: Text(
-                          "Sign In",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white, fontSize: 20),
+                Positioned(
+                  top: heightMedia - 225,
+                  left: widthMedia * 0.03,
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: _submit,
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: widthMedia * 1 - 20,
+                          height: heightMedia * 0.07,
+                          decoration: BoxDecoration(
+                              color: Color(0xFFF57C00),
+                              borderRadius: BorderRadius.circular(35)),
+                          child: Text(
+                            "Sign In",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Text(
-                      "Forgot Password?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    InkWell(
-                      onTap: () => Navigator.of(context)
-                          .pushReplacementNamed(SignUpScreen.routeId),
-                      child: Text(
-                        "Sign Up",
+                      SizedBox(
+                        height: 25,
+                      ),
+                      FlatButton.icon(
+                        icon: Icon(Icons.golf_course_outlined),
+                        label: Text("Google"),
+                        onPressed: () async{
+                         await Provider.of<Authentication>(context, listen: false)
+                              .googleSignIn().then((value) => Navigator.of(context).pushReplacementNamed(HomePage.routeId));
+                        },
+                        textColor: Colors.white,
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Text(
+                        "Forgot Password?",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        height: 25,
+                      ),
+                      InkWell(
+                        onTap: () => Navigator.of(context)
+                            .pushReplacementNamed(SignUpScreen.routeId),
+                        child: Text(
+                          "Sign Up",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
         )

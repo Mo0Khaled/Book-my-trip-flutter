@@ -24,7 +24,6 @@ void main() async {
   await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool  seen = prefs.getBool('seen');
-  print(seen);
   Widget _screen ;
   if(seen == null || seen == false){
     _screen = WelcomeScreen();
