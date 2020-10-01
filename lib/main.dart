@@ -7,6 +7,7 @@ import 'package:bookmytrip/screens/hotel_admin_panel.dart';
 import 'package:bookmytrip/screens/hotel_admin_view.dart';
 import 'package:bookmytrip/screens/hotel_details_screen.dart';
 import 'package:bookmytrip/screens/hotel_directions_screen.dart';
+import 'package:bookmytrip/screens/loading_screen.dart';
 import 'package:bookmytrip/screens/make_payment_screen.dart';
 import 'package:bookmytrip/screens/profile_screen.dart';
 import 'package:bookmytrip/screens/sign_in_screen.dart';
@@ -16,15 +17,28 @@ import 'package:bookmytrip/screens/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
-  runApp(MyApp());
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool  seen = prefs.getBool('seen');
+  print(seen);
+  Widget _screen ;
+  if(seen == null || seen == false){
+    _screen = WelcomeScreen();
+  }else{
+    _screen = SignInScreen();
+  }
+  runApp(MyApp(_screen));
 }
 
 class MyApp extends StatelessWidget {
+  final Widget screen;
+
+  MyApp(this.screen);
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -38,8 +52,9 @@ class MyApp extends StatelessWidget {
           create: (context) => HotelProvider('', []),
 
         ),
-        ChangeNotifierProvider(
-          create: (context) => OrderProvider(),
+        ChangeNotifierProxyProvider<Authentication,OrderProvider>(
+          update: (ctx,auth,orders)=> OrderProvider(auth.token,auth.userId, orders.orders == null ? [] : orders.orders),
+          create: (context) => OrderProvider('','',[]),
         ),
 
       ],
@@ -66,7 +81,10 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.white,
             // buttonColor: Colors.white,
           ),
-          home: auth.isAuth ? HomePage() : WelcomeScreen(),
+          home: auth.isAuth ? HomePage() : FutureBuilder(
+            future: auth.tryAutoLogin(),
+            builder: (context,snapshot)=> snapshot.connectionState == ConnectionState.waiting ? LoadingScreen(): screen,
+          ),
           // initialRoute: HomePage.routeId,
           routes: {
             HomePage.routeId: (context) => HomePage(),

@@ -12,11 +12,16 @@ class OrderProvider with ChangeNotifier {
   // ignore: unnecessary_getters_setters
   OrderModel get order => _order;
   List<OrderModel> _orders = [];
+  final String token;
+  final String userId;
+
+
+  OrderProvider( this.token,this.userId,this._orders,);
 
   List<OrderModel> get orders => _orders;
 
   Future<void> fetchBookingHistory() async {
-    final url = 'https://book-my-trip-8b2f5.firebaseio.com/booking.json';
+    final url = 'https://book-my-trip-8b2f5.firebaseio.com/booking/$userId.json?auth=$token';
     final response = await http.get(url);
     final data = json.decode(response.body) as Map<String, dynamic>;
     if (data == null) {
@@ -43,7 +48,7 @@ class OrderProvider with ChangeNotifier {
 
   Future<void> bookNow(OrderModel orderModel) async {
     final time = DateTime.now();
-    final url = 'https://book-my-trip-8b2f5.firebaseio.com/booking.json';
+    final url = 'https://book-my-trip-8b2f5.firebaseio.com/booking/$userId.json?auth=$token';
     final response = await http.post(
       url,
       body: json.encode({

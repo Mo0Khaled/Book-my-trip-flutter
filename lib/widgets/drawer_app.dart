@@ -2,6 +2,7 @@ import 'package:bookmytrip/provider/authentication.dart';
 import 'package:bookmytrip/screens/booking_history.dart';
 import 'package:bookmytrip/screens/hotel_admin_view.dart';
 import 'package:bookmytrip/screens/profile_screen.dart';
+import 'package:bookmytrip/screens/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -55,7 +56,8 @@ class DrawerApp extends StatelessWidget {
                 title: "Logout", icon: Icons.logout, onPressed: () {
                   Navigator.of(context).pop();
 
-              Provider.of<Authentication>(context,listen: false).logout();
+                Provider.of<Authentication>(context,listen: false).logout();
+                Navigator.of(context).pushReplacementNamed(SignInScreen.routeId);
             }),
           ],
         ),

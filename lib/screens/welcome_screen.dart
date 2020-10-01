@@ -2,6 +2,7 @@ import 'package:bookmytrip/screens/sign_in_screen.dart';
 import 'package:bookmytrip/screens/sign_up_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const routeId = '/welcome-screen';
@@ -64,6 +65,7 @@ class WelcomeScreen extends StatelessWidget {
                    GestureDetector(
                      onTap: () {
                        Navigator.of(context).pushReplacementNamed(SignInScreen.routeId);
+                       _seen();
                      },
                      child: Container(
                        alignment: Alignment.center,
@@ -85,6 +87,7 @@ class WelcomeScreen extends StatelessWidget {
                    GestureDetector(
                      onTap: () {
                        Navigator.of(context).pushReplacementNamed(SignUpScreen.routeId);
+                       _seen();
                      },
                      child: Container(
                        alignment: Alignment.center,
@@ -110,5 +113,9 @@ class WelcomeScreen extends StatelessWidget {
        )
       ],
     );
+  }
+  void  _seen()async{
+    SharedPreferences prefs  =await SharedPreferences.getInstance();
+    prefs.setBool('seen', true);
   }
 }
